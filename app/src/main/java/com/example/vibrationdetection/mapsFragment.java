@@ -4,6 +4,7 @@ package com.example.vibrationdetection;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -25,9 +26,11 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.IntentCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,6 +39,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.vibrationdetection.data.AsynchronousDatabase;
 import com.example.vibrationdetection.sensors.AccelerometerSensor;
 import com.example.vibrationdetection.sensors.LocationSensor;
+import com.example.vibrationdetection.service.ForegroundConstants;
+import com.example.vibrationdetection.service.ForegroundService;
 import com.example.vibrationdetection.utils.Vector3D;
 import com.google.android.gms.common.api.internal.BackgroundDetector;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -70,7 +75,6 @@ public class mapsFragment extends Fragment implements OnMapReadyCallback {
     public mapsFragment() {}
     private static boolean state=false;
     private LinearLayout bottomSheetLayout;
-
     private int gpsRecordCount = 0;
     private int accelRecordCount = 0;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -99,7 +103,6 @@ public class mapsFragment extends Fragment implements OnMapReadyCallback {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.maps, container, false);
         mapView =(MapView) root.findViewById(R.id.map_view);
-
         Bundle mapViewBundle = null;
         if(savedInstanceState!=null){
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -140,49 +143,56 @@ public class mapsFragment extends Fragment implements OnMapReadyCallback {
             fab.setX(mapView.getWidth()/2-fab.getWidth()/2);
             fab.setY(mapView.getHeight()/2-fab.getHeight()/2);
             state = false;
-            accelerometerSensor.stop();
-            locationSensor.stop();
+            //accelerometerSensor.stop();
+            //locationSensor.stop();
         }
     }
 
     private void fabOnStartAction() {
-    accelerometerSensor = new AccelerometerSensor(this.getContext()) {
-        @Override
-        public void onUpdate(Vector3D a, Vector3D g) {
-            if (accelerometerSensor.significantMotionDetected()) {
-                //database.addAccelerometerEntry(a, g);
-                if(accelerometerSensor.significantMotionDetected()){
-                    accelRecordCount++;
-
-
-                }
-
-            }
+        Intent service = new Intent (mapsFragment.this.getContext(), ForegroundService.class);
+        if (!ForegroundService.IS_SERVICE_RUNNING) {
+            service.setAction(ForegroundConstants.ACTION.STARTFOREGROUND_ACTION);
+        } else {
+            service.setAction(ForegroundConstants.ACTION.STOPFOREGROUND_ACTION);
         }
-
-    };
-
-    locationSensor = new LocationSensor(this.getContext()) {
-        @Override
-        public void onUpdate(Location location) {
-            //database.addLocationEntry(location);
-            if(accelerometerSensor.significantMotionDetected()){
-                gpsRecordCount++;
-
-                LatLng loc = new LatLng(location.getLatitude(),location.getLongitude());
-                gmap.addMarker(new MarkerOptions().position(loc).title("Hole: "+Integer.toString(gpsRecordCount)));
-                TextView text = root.findViewById( R.id.holes);
-                text.setText("Holes: "+Integer.toString(gpsRecordCount));
-                showLastKnownLocation(gmap);
-                //gmap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,13f));
-            }
-
-
-        }
-    };
-    accelerometerSensor.start();
-
-    locationSensor.start();
+       this.getContext().startService(service);
+        //    accelerometerSensor = new AccelerometerSensor(this.getContext()) {
+//        @Override
+//        public void onUpdate(Vector3D a, Vector3D g) {
+//            if (accelerometerSensor.significantMotionDetected()) {
+//                //database.addAccelerometerEntry(a, g);
+//                if(accelerometerSensor.significantMotionDetected()){
+//                    accelRecordCount++;
+//
+//
+//                }
+//
+//            }
+//        }
+//
+//    };
+//
+//    locationSensor = new LocationSensor(this.getContext()) {
+//        @Override
+//        public void onUpdate(Location location) {
+//            //database.addLocationEntry(location);
+//            if(accelerometerSensor.significantMotionDetected()){
+//                gpsRecordCount++;
+//
+//                LatLng loc = new LatLng(location.getLatitude(),location.getLongitude());
+//                gmap.addMarker(new MarkerOptions().position(loc).title("Hole: "+Integer.toString(gpsRecordCount)));
+//                TextView text = root.findViewById( R.id.holes);
+//                text.setText("Holes: "+Integer.toString(gpsRecordCount));
+//                showLastKnownLocation(gmap);
+//                //gmap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,13f));
+//            }
+//
+//
+//        }
+//    };
+//    accelerometerSensor.start();
+//
+//    locationSensor.start();
 
     }
 
