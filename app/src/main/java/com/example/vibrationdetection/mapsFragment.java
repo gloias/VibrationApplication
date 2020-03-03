@@ -178,7 +178,7 @@ public class mapsFragment extends Fragment implements OnMapReadyCallback {
           }
 
           //db.close();
-        }
+        //}
 
 
         //    accelerometerSensor = new AccelerometerSensor(this.getContext()) {
