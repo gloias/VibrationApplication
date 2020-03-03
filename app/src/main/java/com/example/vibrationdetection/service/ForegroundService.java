@@ -50,7 +50,7 @@ public class ForegroundService extends Service {
             public void onUpdate(Vector3D a, Vector3D g) {
                 if (accelerometerSensor.significantMotionDetected()) {
                     float result = a.dot(g) ;
-                    Log.i(LOG_TAG,Float.toString(result));
+                    //Log.i(LOG_TAG,Float.toString(result));
                     if (result<0){
                         isHole = true;
                         accelRecordCount++;

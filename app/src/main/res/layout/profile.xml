@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorBlueLight"
+
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <LinearLayout
@@ -13,7 +15,35 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
-        <TextView
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="10"
+            android:src="@drawable/profile_round"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_settings"/>
+            <ImageView
+                android:background="@color/colorBlueLight"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/common_google_signin_btn_icon_dark_normal"/>
+        </LinearLayout>
+        </LinearLayout>
+            <TextView
             style="@style/headerText"
             android:text="Account Info"
             android:layout_marginBottom="20dp"/>
@@ -93,5 +123,6 @@
                 style="@style/profileDetailsMiniText" />
         </RelativeLayout>
         <View style="@style/proifleDetailsView" />
-    </LinearLayout>
+    </LinearLayout
+        >
 </androidx.core.widget.NestedScrollView>
