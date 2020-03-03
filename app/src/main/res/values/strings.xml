@@ -3,7 +3,7 @@
     <string name="tab_text_1">Main</string>
     <string name="tab_text_2">Maps</string>
     <string name="tab_text_3">Profile</string>
-    <string name="google_maps_key">AIzaSyBgQvUqUq_6-CR45FhZ7AJ8u7h6H8u4hSg</string>
+    <string name="google_maps_key">Your Google API Key</string>
     <string name="recent_trips">Recent Trips</string>
     <!-- Strings in Layout files -->
     <string name="next_all_caps">NEXT</string>
