@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class TabsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES =
-            new int[] { R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3 };
+            new int[] { R.string.tab_text_2, R.string.tab_text_1, R.string.tab_text_3};
     private final Context mContext;
     public TabsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -20,9 +20,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return mainFragment.newInstance();
-            case 1:
                 return mapsFragment.newInstance();
+            case 1:
+                return mainFragment.newInstance();
             case 2:
                 return profileFragment.newInstance();
             default:

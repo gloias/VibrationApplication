@@ -36,7 +36,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vibrationdetection.data.AppDatabase;
 import com.example.vibrationdetection.data.AsynchronousDatabase;
+import com.example.vibrationdetection.data.entities.Accelerometer;
 import com.example.vibrationdetection.sensors.AccelerometerSensor;
 import com.example.vibrationdetection.sensors.LocationSensor;
 import com.example.vibrationdetection.service.ForegroundConstants;
@@ -60,6 +62,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 
 public class mapsFragment extends Fragment implements OnMapReadyCallback {
@@ -143,19 +146,36 @@ public class mapsFragment extends Fragment implements OnMapReadyCallback {
             fab.setX(mapView.getWidth()/2-fab.getWidth()/2);
             fab.setY(mapView.getHeight()/2-fab.getHeight()/2);
             state = false;
+            fabOnStartAction();
+
             //accelerometerSensor.stop();
             //locationSensor.stop();
         }
     }
 
     private void fabOnStartAction() {
-        Intent service = new Intent (mapsFragment.this.getContext(), ForegroundService.class);
+        Intent service = new Intent (getActivity(), ForegroundService.class);
+        Log.i("LOG_TAG", "Received Start Foreground Intent ");
+
         if (!ForegroundService.IS_SERVICE_RUNNING) {
             service.setAction(ForegroundConstants.ACTION.STARTFOREGROUND_ACTION);
+            getActivity().startService(service);
+//                showLastKnownLocation(gmap);
+//                //gmap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,13f));
+
         } else {
             service.setAction(ForegroundConstants.ACTION.STOPFOREGROUND_ACTION);
+            getActivity().startService(service);
+//            AppDatabase db = AppDatabase.getInstance(getContext());
+//            List<Accelerometer> accelerometerList = db.accelerometerDao().getAll();
+            //   LatLng loc = new LatLng(location.getLatitude(),location.getLongitude());
+//                gmap.addMarker(new MarkerOptions().position(loc).title("Hole: "+Integer.toString(gpsRecordCount)));
+//            TextView text = root.findViewById( R.id.holes);
+//            text.setText("Holes: "+Integer.toString(accelerometerList.size()));
+//            db.close();
         }
-       this.getContext().startService(service);
+
+
         //    accelerometerSensor = new AccelerometerSensor(this.getContext()) {
 //        @Override
 //        public void onUpdate(Vector3D a, Vector3D g) {

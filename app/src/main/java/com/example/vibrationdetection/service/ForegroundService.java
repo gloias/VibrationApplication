@@ -39,7 +39,7 @@ public class ForegroundService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        setupNotification();
+        //setupNotification();
 
         database = new AsynchronousDatabase(this);
 
@@ -50,7 +50,7 @@ public class ForegroundService extends Service {
                     database.addAccelerometerEntry(a, g);
                     accelRecordCount++;
                     if (accelRecordCount % 100 == 0) {
-                        updateNotification();
+                       // updateNotification();
                     }
                 }
             }
@@ -61,7 +61,7 @@ public class ForegroundService extends Service {
             public void onUpdate(Location location) {
                 database.addLocationEntry(location);
                 gpsRecordCount++;
-                updateNotification();
+               // updateNotification();
             }
         };
 
@@ -78,7 +78,7 @@ public class ForegroundService extends Service {
             locationSensor.start();
 
             Log.i(LOG_TAG, "Received Start Foreground Intent ");
-            showNotification();
+           // showNotification();
             IS_SERVICE_RUNNING = true;
 
         } else if (intent.getAction().equals(
@@ -90,9 +90,9 @@ public class ForegroundService extends Service {
             stopForeground(true);
             IS_SERVICE_RUNNING = false;
 
-            Intent longTermStorageIntent = new Intent(this, DatabaseService.class);
-            longTermStorageIntent.putExtra(ServiceConstants.SERVICE_PROCESS_TAG, ServiceConstants.PROCESS_LONG_TERM_STORAGE);
-            startService(longTermStorageIntent);
+            //Intent longTermStorageIntent = new Intent(this, DatabaseService.class);
+            //longTermStorageIntent.putExtra(ServiceConstants.SERVICE_PROCESS_TAG, ServiceConstants.PROCESS_LONG_TERM_STORAGE);
+            //startService(longTermStorageIntent);
 
             stopSelf();
         }
