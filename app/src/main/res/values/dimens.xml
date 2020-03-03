@@ -14,4 +14,8 @@
     <dimen name="bottom_sheet_title_text_size">20sp</dimen><!--16dp-->
     <dimen name="bottom_sheet_title_height">56dp</dimen><!--56dp-->
     <dimen name="bottom_sheet_margin_left_right">24dp</dimen>
+
+     <dimen name="app_bar_height">180dp</dimen>
+     <dimen name="text_margin">16dp</dimen>
+    <dimen name="headerTextSize">28sp</dimen>
 </resources>
