@@ -16,6 +16,7 @@ public abstract class LocationSensor implements LocationListener {
     
     public LocationSensor(Context context) {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
     }
     
     public void start() {

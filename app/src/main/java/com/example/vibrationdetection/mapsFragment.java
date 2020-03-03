@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.vibrationdetection.data.AppDatabase;
 import com.example.vibrationdetection.data.AsynchronousDatabase;
 import com.example.vibrationdetection.data.entities.Accelerometer;
+import com.example.vibrationdetection.data.entities.RoadPoint;
 import com.example.vibrationdetection.sensors.AccelerometerSensor;
 import com.example.vibrationdetection.sensors.LocationSensor;
 import com.example.vibrationdetection.service.ForegroundConstants;
@@ -166,13 +167,17 @@ public class mapsFragment extends Fragment implements OnMapReadyCallback {
         } else {
             service.setAction(ForegroundConstants.ACTION.STOPFOREGROUND_ACTION);
             getActivity().startService(service);
-//            AppDatabase db = AppDatabase.getInstance(getContext());
-//            List<Accelerometer> accelerometerList = db.accelerometerDao().getAll();
-            //   LatLng loc = new LatLng(location.getLatitude(),location.getLongitude());
+//          AppDatabase db = AppDatabase.getInstance(getContext());
+//          List<RoadPoint> locationList = db.roadPointDao().getAll();
+//          if(!locationList.isEmpty()){
+//            for(RoadPoint point : locationList){
+//                 LatLng loc = new LatLng(point.getLatitude() , point.getLongitude());
 //                gmap.addMarker(new MarkerOptions().position(loc).title("Hole: "+Integer.toString(gpsRecordCount)));
-//            TextView text = root.findViewById( R.id.holes);
-//            text.setText("Holes: "+Integer.toString(accelerometerList.size()));
-//            db.close();
+//
+//            }
+          }
+
+          //db.close();
         }
 
 

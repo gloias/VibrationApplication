@@ -54,6 +54,7 @@ public abstract class AccelerometerSensor implements SensorEventListener {
     }
 
     public boolean significantMotionDetected() {
+
         return Math.abs(acceleration.project(gravity) - 1) > PROJECTION_SCALING_FACTOR_TRIGGER &&
                 this.sensorSettled();
     }

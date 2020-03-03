@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -19,6 +20,7 @@ import com.example.vibrationdetection.mapsFragment;
 import com.example.vibrationdetection.sensors.AccelerometerSensor;
 import com.example.vibrationdetection.sensors.LocationSensor;
 import com.example.vibrationdetection.utils.Vector3D;
+import com.google.android.gms.location.LocationServices;
 
 public class ForegroundService extends Service {
     private static final String LOG_TAG = "ForegroundService";
@@ -34,7 +36,7 @@ public class ForegroundService extends Service {
     private NotificationManager notificationManager;
     private Notification.Builder notificationBuilder;
     private static final int NOTIFICATION_ID = ForegroundConstants.NOTIFICATION_ID.FOREGROUND_SERVICE;
-
+    private boolean isHole =false;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,10 +49,17 @@ public class ForegroundService extends Service {
             @Override
             public void onUpdate(Vector3D a, Vector3D g) {
                 if (accelerometerSensor.significantMotionDetected()) {
+                    float result = a.dot(g) ;
+                    Log.i(LOG_TAG,Float.toString(result));
+                    if (result<0){
+                        isHole = true;
+                        accelRecordCount++;
+
+                    }
                     database.addAccelerometerEntry(a, g);
-                    accelRecordCount++;
                     if (accelRecordCount % 100 == 0) {
-                       // updateNotification();
+
+                        // updateNotification();
                     }
                 }
             }
@@ -59,8 +68,11 @@ public class ForegroundService extends Service {
         locationSensor = new LocationSensor(this) {
             @Override
             public void onUpdate(Location location) {
-                database.addLocationEntry(location);
-                gpsRecordCount++;
+                if(isHole){
+                    database.addLocationEntry(location);
+                    gpsRecordCount++;
+
+                }
                // updateNotification();
             }
         };
