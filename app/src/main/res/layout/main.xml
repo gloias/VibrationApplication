@@ -23,4 +23,5 @@
         android:layout_weight="10">
 
     </com.github.mikephil.charting.charts.BarChart>
+
 </LinearLayout>

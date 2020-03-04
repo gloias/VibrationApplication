@@ -4,8 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorBlueLight"
-
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <LinearLayout
@@ -19,11 +17,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
+
             android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="match_parent"
             android:layout_weight="10"
             android:src="@drawable/profile_round"/>
         <LinearLayout
@@ -31,16 +30,19 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:gravity="center">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_settings"/>
-            <ImageView
-                android:background="@color/colorBlueLight"
 
-                android:layout_width="wrap_content"
+            <ImageButton
+                android:layout_width="@dimen/fab_size"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_settings" />
+            <ImageButton
+                android:layout_width="@dimen/fab_size"
                 android:layout_height="wrap_content"
                 android:src="@drawable/common_google_signin_btn_icon_dark_normal"/>
+            <ImageButton
+                android:layout_width="@dimen/fab_size"
+                android:layout_height="match_parent"
+                android:src = "@drawable/fb_login"/>
         </LinearLayout>
         </LinearLayout>
             <TextView
